@@ -8,6 +8,9 @@ import datetime
 
 from flask import current_app
 
+from app import db
+from app.models.user_models import User, Role
+
 
 def init_db_command(the_app):
     """ Initialize the database."""
@@ -28,8 +31,6 @@ def init_db_command(the_app):
 def create_users():
     """ Create users """
 
-    from app import db
-
     # Create all tables
     db.create_all()
 
@@ -46,10 +47,6 @@ def create_users():
 
 def find_or_create_role(name, label):
     """ Find existing role or create new role """
-
-    from app import db
-    from app.models.user_models import Role
-
     role = Role.query.filter(Role.name == name).first()
     if not role:
         role = Role(name=name, label=label)
@@ -59,10 +56,6 @@ def find_or_create_role(name, label):
 
 def find_or_create_user(first_name, last_name, email, password, role=None):
     """ Find existing user or create new user """
-
-    from app import db
-    from app.models.user_models import User
-
     user = User.query.filter(User.email == email).first()
     if not user:
         user = User(email=email,

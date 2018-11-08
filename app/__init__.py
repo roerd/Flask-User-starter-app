@@ -8,13 +8,13 @@ from flask_migrate import Migrate
 from flask_user import UserManager
 from flask_wtf.csrf import CSRFProtect
 
-from app.commands import init_db_command
 
 # Instantiate Flask extensions
 csrf_protect = CSRFProtect()
 db = SQLAlchemy()
 mail = Mail()
 migrate = Migrate()
+
 
 # Initialize Flask Application
 def create_app(extra_config_settings={}):
@@ -69,6 +69,7 @@ def create_app(extra_config_settings={}):
         return dict(user_manager=user_manager)
 
     # Define CLI commands
+    from app.commands import init_db_command
     init_db_command(app)
 
     return app
